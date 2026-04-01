@@ -710,3 +710,28 @@ function custom_cpt_archive_title($title) {
     return $title;
 }
 add_filter('wpseo_title', 'custom_cpt_archive_title', 10, 1);
+
+/**
+ * Run templates any Thememe may have for single/archive, but if not, use plugin templates (only if enabled)
+ */
+add_filter('template_include', function($template) {
+
+    if (!function_exists('get_field')) return $template; // ACF not ready
+
+    $loc_pages = get_field('loc_pages', 'option');
+    if ($loc_pages !== true && $loc_pages !== '1' && $loc_pages !== 1) return $template;
+
+    // Single location page
+    if (is_singular('lp')) {
+        $plugin_template = plugin_dir_path(__FILE__) . 'templates/single-lp.php';
+        if (file_exists($plugin_template)) return $plugin_template;
+    }
+
+    // Archive location page
+    if (is_post_type_archive('lp')) {
+        $plugin_template = plugin_dir_path(__FILE__) . 'templates/archive-lp.php';
+        if (file_exists($plugin_template)) return $plugin_template;
+    }
+
+    return $template;
+});

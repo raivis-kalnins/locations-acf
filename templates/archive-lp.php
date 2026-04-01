@@ -1,7 +1,12 @@
 <?php
-    get_header();
-    $home_url = get_home_url();
-    header('Location: '.$home_url.'/lp/');
-        echo do_shortcode( '[wp_paginated_lp]' );
-    die();
-    get_footer();
+get_header();
+
+$archive_text = get_field('loc_archive_text', 'option');
+if ($archive_text) {
+    echo '<div class="loc-archive-intro">' . $archive_text . '</div>';
+}
+
+echo do_shortcode('[wp_paginated_lp]');
+
+get_footer();
+?>
