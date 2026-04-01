@@ -1,4 +1,7 @@
-<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
-<!-- wp:shortcode -->[wp_single_lp]<!-- /wp:shortcode -->
-<!-- wp:spacer {"height":"70"} --><div style="height:70px" aria-hidden="true" class="wp-block-spacer"></div><!-- /wp:spacer -->
-<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer","layout":{"inherit":false}} /-->
+<?php
+    get_header();
+    $home_url = get_home_url();
+    header('Location: '.$home_url.'/lp/');
+        echo do_shortcode( '[wp_single_lp]' );
+    die();
+    get_footer();
