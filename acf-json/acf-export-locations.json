@@ -331,6 +331,13 @@
                     "operator": "==",
                     "value": "locations-settings"
                 }
+            ],
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "locations-settings"
+                }
             ]
         ],
         "menu_order": 0,
@@ -358,7 +365,7 @@
         "icon_url": "",
         "menu_title": "",
         "position": 2,
-        "redirect": 0,
+        "redirect": 1,
         "description": "",
         "menu_icon": {
             "type": "dashicons",
