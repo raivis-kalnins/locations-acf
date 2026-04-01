@@ -2,9 +2,9 @@
 /* 
  * Plugin Name: Locations ACF
  * Description: Works for any ACF field, but designed for use with the Locations plugin. Supports: Gutenberg blocks, Elementor, DIVI Builder, Bakery builder, and any other page builder that can render shortcodes. Example Shortcodes: [wp_paginated_lp] => archive page,  [loc_county] and [loc_city] for dynamic templates
- * Author: WP Engine
- * Version: 1.0
- * Requires PHP: 8.0
+ * Version: 1.0.0
+ * Author: Raivis Kalnins
+ * Requires Plugins: ACF Pro
 */
 $loc_pages = get_field('loc_pages', 'option') ?? ''; //var_dump($loc_pages);
 
