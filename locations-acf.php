@@ -6,7 +6,7 @@
  * Version: 1.0
  * Requires PHP: 8.0
 */
-$loc_pages = get_field('loc_pages', 'option') ?? ''; var_dump($loc_pages);
+$loc_pages = get_field('loc_pages', 'option') ?? ''; //var_dump($loc_pages);
 
 if ($loc_pages == 'true') :
 
