@@ -1,0 +1,62 @@
+-------------- Single Title -------------- 
+
+$title_source = 'Roller Shutter installation, <br>maintenance and <br>repair for <b class="loc-city"></b>';
+
+-------------- Loc Random Text --------------
+
+Arrow Security Shutters specialise in the design, manufacture, and installation of high-quality roller shutters and security shutters. Our team serving [loc_city] provides reliable repairs and installations for commercial, industrial, and retail properties, helping keep your premises secure and operating smoothly. With years of experience and a consultative approach, we deliver tailored solutions to suit every property and requirement.
+
+Where we truly stand apart is in our consultative approach, technical expertise, and our ability to manufacture and install. This enables us to provide a complete end-to-end solution: from product specification to on-site installation. We remain agile and responsive to the needs of every client we work with.
+<h2><b>Secure Your Property with Our Roller Shutters and Security Doors</b></h2>
+<span style="font-weight: 400;">We supply and install a wide range of security roller shutters and access solutions suitable for commercial, industrial, and retail environments. Our products are designed to improve safety, increase security, and provide reliable performance for your premises.</span>
+
+<b>Our products include:</b>
+<ul>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/industrial-roller-shutter-doors/"><span style="font-weight: 400;">Industrial Roller Shutter Doors </span></a></li>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/collapsible-gates/"><span style="font-weight: 400;">Collapsible Gates </span></a></li>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/security-roller-shutters-grilles/"><span style="font-weight: 400;">Security Grilles</span></a></li>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/fire-roller-shutters/"><span style="font-weight: 400;">Fire Roller Shutters</span></a></li>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/steel-hinged-doors/"><span style="font-weight: 400;">Steel Hinged Doors</span></a></li>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/pvc-strip-curtains/"><span style="font-weight: 400;">PVC Strip Curtains</span></a></li>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/sectional-overhead-doors/"><span style="font-weight: 400;">Sectional Overhead Doors</span></a></li>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/folding-shutter-doors/"><span style="font-weight: 400;">Folding Shutter Doors</span></a></li>
+ 	<li style="font-weight: 400;" aria-level="1"><a href="domain.com/products/automatic-doors/"><span style="font-weight: 400;">Automatic Doors</span></a></li>
+</ul>
+We help keep people by physical assets, and premises safe through our innovative and cost-effective product range. Our team supports you at every step, offering bespoke solutions tailored to your unique project requirements.
+
+&nbsp;
+
+-------------- Loc Archive Intro Text --------------
+
+<h2 class="wp-block-heading has-text-align-left">Where Do we Operate</h2>
+We’re on a mission to design, manufacture, install, and maintain a full range of roller shutters and industrial doors tailored to your security needs.
+Here are the areas we currently cover.
+
+&nbsp;
+
+-------------- Loc FAQ --------------
+
+<h3><b>Frequently Asked Questions</b></h3>
+<b>Q1: Do you install shop shutters for retail properties?</b>
+<span style="font-weight: 400;">A: Yes, Arrow Security Shutters installs high-quality shop shutters for retail premises across [loc_city], helping protect your storefront and improve security outside business hours.</span>
+<b>Q2: Can you supply and install window shutters?</b>
+<span style="font-weight: 400;">A: Yes, we provide a variety of window shutters in [loc_city] designed to enhance both property security and visual appearance, with options tailored to your specific requirements.</span>
+<b>Q3: Do you offer repairs and maintenance for all types of shutters?</b>
+<span style="font-weight: 400;">A: Yes, we carry out professional repairs and maintenance for all types of security roller shutters , ensuring they continue to operate safely and efficiently.</span>
+<b>Q4: Do you offer emergency shutter repairs?</b>
+<span style="font-weight: 400;">A: Yes, we provide 24/7 emergency shutter repairs throughout [loc_city], responding quickly to urgent issues to restore the security and functionality of your shutters.</span>
+
+&nbsp;
+
+-------------- Loc Meta Title ( added before [loc_city] + your text ) --------------
+
+Security Roller Shutters | Installation and Repairs&nbsp;
+
+-------------- Loc Meta Description ( added before [loc_city] + your text ) --------------
+
+industrial and commercial properties are protected by Arrow Security Shutters, offering expert roller shutter installation and emergency repairs.&nbsp;
+
+-------------- Loc Keywords --------------
+
+roller shutters, Security shutters
+
