@@ -13,6 +13,10 @@ $random_images = get_field('loc_random_images', 'option');
     background: #fff;
     padding: 70px 30px;
 }
+.lp-container h1 {
+    font-size: 34px;
+    margin-bottom: 30px;
+}
 .lp-media-text {
     display: flex;
     gap: 0;
@@ -35,7 +39,7 @@ $random_images = get_field('loc_random_images', 'option');
 }
 </style>
 <div class="lp-container">
-    <h1><?php echo esc_html($main_title); ?></h1>
+    <h1><?php echo esc_html(locations_acf_get_main_title()); ?></h1>
     <?php if(!empty($random_images)):
         $random_img = $random_images[array_rand($random_images)];
     ?>
