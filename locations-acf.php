@@ -2,7 +2,7 @@
 /*
 Plugin Name: Locations ACF
 Description: Complete locations plugin with ACF integration, CSV upload, shortcodes, Leaflet map, and meta replacement.
-Version: 1.3.0
+Version: 1.3.2
 Author: Raivis Kalnins
 Requires Plugins: advanced-custom-fields-pro
 Requires at least: 6.0
@@ -11,7 +11,7 @@ Requires PHP: 7.4
 
 if (!defined('ABSPATH')) exit;
 
-// Check if ACF is active
+// ACF check
 if (!function_exists('acf_add_options_page') || !function_exists('acf_add_local_field_group')) {
     add_action('admin_notices', function() {
         echo '<div class="notice notice-error"><p><strong>Locations ACF:</strong> Advanced Custom Fields (ACF) plugin is required.</p></div>';
@@ -20,81 +20,49 @@ if (!function_exists('acf_add_options_page') || !function_exists('acf_add_local_
 }
 
 /**
- * Register ACF Options Page and Field Groups on ACF init
+ * Register ACF Options and Field Groups
  */
 add_action('acf/init', function() {
-    
+
     // Options page
     acf_add_options_page([
         'page_title' => 'Locations',
         'menu_title' => 'Locations',
-        'menu_slug' => 'locations-settings',
-        'parent_slug' => 'options-general.php',
+        'menu_slug'  => 'locations-settings',
+        'parent_slug'=> 'options-general.php',
         'capability' => 'edit_posts',
-        'redirect' => false,
-        'position' => 2,
-        'icon_url' => 'dashicons-location',
+        'redirect'   => false,
+        'position'   => 2,
+        'icon_url'   => 'dashicons-location',
     ]);
 
-    // Locations options field group
+    // Options fields
     acf_add_local_field_group([
         'key' => 'group_locations_options',
         'title' => 'Locations Options',
         'fields' => [
-            [
-                'key' => 'field_loc_pages',
-                'label' => 'Enable Locations Pages',
-                'name' => 'loc_pages',
-                'type' => 'true_false',
-                'ui' => 1,
-                'default_value' => 0,
-            ],
-            [
-                'key' => 'field_loc_random_text',
-                'label' => 'Loc Random Text',
-                'name' => 'loc_random_text',
-                'type' => 'wysiwyg',
-            ],
-            [
-                'key' => 'field_loc_random_images',
-                'label' => 'Loc Random Images',
-                'name' => 'loc_random_images',
-                'type' => 'gallery',
-                'return_format' => 'url',
-            ],
-            [
-                'key' => 'field_loc_meta_title',
-                'label' => 'Loc Meta Title',
-                'name' => 'loc_meta_title',
-                'type' => 'text',
-            ],
-            [
-                'key' => 'field_loc_meta_description',
-                'label' => 'Loc Meta Description',
-                'name' => 'loc_meta_description',
-                'type' => 'text',
-            ],
-            [
-                'key' => 'field_loc_keywords',
-                'label' => 'Loc Keywords',
-                'name' => 'loc_keywords',
-                'type' => 'text',
-            ],
-            [
-                'key' => 'field_loc_archive_text',
-                'label' => 'Loc Archive Intro Text',
-                'name' => 'loc_archive_text',
-                'type' => 'wysiwyg',
-            ],
+            ['key'=>'field_loc_pages','label'=>'Enable Locations Pages','name'=>'loc_pages','type'=>'true_false','ui'=>1,'default_value'=>0],
+            ['key'=>'field_loc_random_text','label'=>'Loc Random Text','name'=>'loc_random_text','type'=>'wysiwyg'],
+            ['key'=>'field_loc_random_images','label'=>'Loc Random Images','name'=>'loc_random_images','type'=>'gallery','return_format'=>'url'],
+            ['key'=>'field_loc_meta_title','label'=>'Loc Meta Title','name'=>'loc_meta_title','type'=>'text'],
+            ['key'=>'field_loc_meta_description','label'=>'Loc Meta Description','name'=>'loc_meta_description','type'=>'text'],
+            ['key'=>'field_loc_keywords','label'=>'Loc Keywords','name'=>'loc_keywords','type'=>'text'],
+            ['key'=>'field_loc_archive_text','label'=>'Loc Archive Intro Text','name'=>'loc_archive_text','type'=>'wysiwyg'],
         ],
-        'location' => [
-            [
-                ['param' => 'options_page', 'operator' => '==', 'value' => 'locations-settings']
-            ]
-        ]
+        'location' => [[['param'=>'options_page','operator'=>'==','value'=>'locations-settings']]]
     ]);
 
-    // Location CPT Fields
+    // Single page title field
+    acf_add_local_field_group([
+        'key' => 'group_location_single',
+        'title' => 'Location Page Settings',
+        'fields' => [
+            ['key'=>'field_loc_main_title','label'=>'Main Title','name'=>'loc_main_title','type'=>'text','instructions'=>'Custom H1 for this location page']
+        ],
+        'location' => [[['param'=>'post_type','operator'=>'==','value'=>'lp']]]
+    ]);
+
+    // Location meta fields
     acf_add_local_field_group([
         'key' => 'group_location_meta',
         'title' => 'Location Details',
@@ -106,20 +74,19 @@ add_action('acf/init', function() {
         ],
         'location' => [[['param'=>'post_type','operator'=>'==','value'=>'lp']]],
     ]);
+
 });
 
 /**
- * Plugin Activation Hook
+ * Activation Hook
  */
 register_activation_hook(__FILE__, function() {
-    if (function_exists('update_field')) {
-        update_field('loc_pages', false, 'option');
-    }
+    if (function_exists('update_field')) update_field('loc_pages', false, 'option');
     flush_rewrite_rules();
 });
 
 /**
- * Register CPT if enabled
+ * Register CPT
  */
 add_action('init', function() {
     if (!function_exists('get_field')) return;
@@ -133,19 +100,21 @@ add_action('init', function() {
             'new_item'=>'New Location','view_item'=>'View Location','search_items'=>'Search Locations',
             'not_found'=>'No locations','not_found_in_trash'=>'No locations in trash'
         ],
-        'public'=>true,'has_archive'=>'areas-we-cover','supports'=>['title','editor','thumbnail'],
-        'menu_icon'=>'dashicons-location','menu_position'=>25,
+        'public'=>true,
+        'has_archive'=>'areas-we-cover',
+        'supports'=>['title','editor','thumbnail'],
+        'menu_icon'=>'dashicons-location',
+        'menu_position'=>25,
         'rewrite'=>['slug'=>'areas-we-cover','with_front'=>false],
     ]);
 },20);
 
 /**
- * Admin submenu: Generate Locations
+ * Admin submenu for generating locations
  */
 add_action('admin_menu', function () {
     if (!function_exists('get_field')) return;
-    $loc_pages = get_field('loc_pages', 'option');
-    if (!$loc_pages) return;
+    if (!get_field('loc_pages', 'option')) return;
 
     add_submenu_page(
         'edit.php?post_type=lp',
@@ -154,7 +123,7 @@ add_action('admin_menu', function () {
 });
 
 /**
- * Admin form for CSV / textarea
+ * CSV / Textarea generator form
  */
 function render_generate_locations_form() {
     ?>
@@ -182,14 +151,17 @@ function render_generate_locations_form() {
     // Process submission
     if (isset($_POST['generate_locations_nonce']) && check_admin_referer('generate_locations_nonce','generate_locations_nonce')) {
         $lines=[];
+
         if (!empty($_POST['locations'])) $lines=explode("\n",$_POST['locations']);
+
         if (!empty($_FILES['locations_csv']['tmp_name'])) {
             if (($handle=fopen($_FILES['locations_csv']['tmp_name'],'r'))!==FALSE) {
                 while(($data=fgetcsv($handle,1000,","))!==FALSE) $lines[]=implode('|',$data);
                 fclose($handle);
             }
         }
-        $created=0;$skip_first=true;
+
+        $created=0; $skip_first=true;
         foreach($lines as $line){
             $line=trim($line);if(!$line) continue;
             if($skip_first){$skip_first=false;continue;}
@@ -205,17 +177,18 @@ function render_generate_locations_form() {
                 }
             }
         }
+
         if($created>0) echo '<div class="notice notice-success"><p>Created '.$created.' city pages.</p></div>';
         else echo '<div class="notice notice-warning"><p>No new locations created.</p></div>';
     }
 }
 
 /**
- * Shortcodes
+ * Shortcodes including Google Map
  */
 add_action('init', function() {
     if (!function_exists('get_field')) return;
-    $loc_pages=get_field('loc_pages','option');if(!$loc_pages) return;
+    if (!get_field('loc_pages','option')) return;
 
     add_shortcode('loc_city',function(){return '<span class="loc-city">'.esc_html(get_field('city')?:get_the_title()).'</span>';});
     add_shortcode('loc_county',function(){return '<span class="loc-county">'.esc_html(get_field('county')?:'').'</span>';});
@@ -233,63 +206,63 @@ add_action('init', function() {
 });
 
 /**
- * Homepage expandable left 0 location icon
+ * Homepage expandable left 0 location icon (white, expandable)
  */
 add_action('wp_footer', function() {
     if (!function_exists('get_field')) return;
-    $loc_pages=get_field('loc_pages','option');if(!$loc_pages) return;
+    if (!get_field('loc_pages','option')) return;
     if(!is_front_page()) return;
 
     $query=new WP_Query(['post_type'=>'lp','posts_per_page'=>10,'orderby'=>'rand']);
-    if(!$query->have_posts()) return; ?>
+    if(!$query->have_posts()) return;
+?>
+<style>
+#random-locations-box{position:fixed;bottom:100px;left:0;z-index:9999;display:flex;}
+#random-locations-handle{width:50px;height:50px;background:#333;border-radius:0 25px 25px 0;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+#random-locations-handle svg{width:22px;height:22px;fill:#fff !important;}
+#random-locations-list{width:0;overflow:hidden;background:#fff;transition:width 0.3s ease;box-shadow:2px 2px 15px rgba(0,0,0,0.2);}
+#random-locations-box.open #random-locations-list{width:220px;padding:10px;}
+#random-locations-list ul{list-style:none;margin:0;padding:0;}
+#random-locations-list li{margin-bottom:6px;}
+#random-locations-list a{font-size:13px;color:#333;text-decoration:none;}
+</style>
 
-    <style>
-    #random-locations-box{position:fixed;bottom:100px;left:0;z-index:9999;width:50px;height:50px;background:#333;border-radius:25px;overflow:hidden;transition:width 0.3s;}
-    #random-locations-box.open{width:200px;}
-    #random-locations-handle{cursor:pointer;width:50px;height:50px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;}
-    #random-locations-list{list-style:none;margin:0;padding:10px;display:flex;flex-direction:column;background:#fff;box-shadow:2px 2px 12px rgba(0,0,0,0.2);border-radius:6px;position:absolute;top:0;left:50px;min-width:150px;opacity:0;transform:translateX(-20px);transition:all 0.3s;pointer-events:none;}
-    #random-locations-box.open #random-locations-list{opacity:1;transform:translateX(0);pointer-events:auto;}
-    #random-locations-list li{margin-bottom:4px;}
-    #random-locations-list li a{font-size:12px;color:#333;text-decoration:none;}
-    </style>
-
-    <div id="random-locations-box">
-        <div id="random-locations-handle">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9 13.38 11.5 12 11.5z"/>
-            </svg>
-        </div>
-        <ul id="random-locations-list">
-            <?php while($query->have_posts()): $query->the_post(); ?>
-                <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
-            <?php endwhile; ?>
+<div id="random-locations-box">
+    <div id="random-locations-handle">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7zM12 11.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z"/></svg>
+    </div>
+    <div id="random-locations-list">
+        <ul>
+        <?php while($query->have_posts()): $query->the_post(); ?>
+            <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+        <?php endwhile; ?>
         </ul>
     </div>
+</div>
 
-    <script>
-    (function(){
-        const box=document.getElementById('random-locations-box');
-        const handle=document.getElementById('random-locations-handle');
-        handle.addEventListener('click',function(){box.classList.toggle('open');});
-    })();
-    </script>
+<script>
+document.getElementById('random-locations-handle').onclick=function(){
+    document.getElementById('random-locations-box').classList.toggle('open');
+};
+</script>
 
-    <?php wp_reset_postdata();
-},999);
+<?php wp_reset_postdata();
+});
 
 /**
- * Single template override for plugin (if theme not exists)
+ * Template override
  */
 add_filter('template_include', function($template){
     if(!function_exists('get_field')) return $template;
-    $loc_pages=get_field('loc_pages','option');if(!$loc_pages) return $template;
+    if(!get_field('loc_pages','option')) return $template;
+
     if(is_singular('lp')){
-        $plugin_template=plugin_dir_path(__FILE__).'templates/single-lp.php';
-        if(file_exists($plugin_template)) return $plugin_template;
+        $t=plugin_dir_path(__FILE__).'templates/single-lp.php';
+        if(file_exists($t)) return $t;
     }
     if(is_post_type_archive('lp')){
-        $plugin_template=plugin_dir_path(__FILE__).'templates/archive-lp.php';
-        if(file_exists($plugin_template)) return $plugin_template;
+        $t=plugin_dir_path(__FILE__).'templates/archive-lp.php';
+        if(file_exists($t)) return $t;
     }
     return $template;
 });
